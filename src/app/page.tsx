@@ -1,101 +1,116 @@
-import Image from "next/image";
+"use client";
+
+import { Search, GitHub, Star, FileText } from "lucide-react";
+import { useState } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
+import { FaGithub } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [username, setUsername] = useState("");
+  const router = useRouter();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Redirect to /github with the username as a query parameter
+    router.push(`/github?username=${username}`);
+  };
+
+  return (
+    <main className="min-h-screen bg-gray-50 font-sans">
+      {/* Hero Banner Section */}
+      <div
+        className="relative h-[500px] bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage:
+            'url("https://plus.unsplash.com/premium_photo-1678566111483-f45ad346d50a?q=80&w=2072&auto=format&fit=crop")',
+        }}
+      >
+        <div className="absolute inset-0 bg-black opacity-50" />
+        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col justify-center items-center h-full text-center text-white">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              GitHub Repository Explorer
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+              Discover and explore GitHub repositories. Search by username and
+              find amazing projects and contributions from around the world.
+            </p>
+
+            {/* Search Box */}
+            <form
+              onSubmit={handleSearch}
+              className="w-full max-w-2xl mx-auto flex gap-4 items-center"
+            >
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter GitHub username"
+                  className="w-full px-6 py-4 rounded-lg text-lg bg-white text-gray-800 shadow-md focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none"
+                />
+                <AiOutlineSearch
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  size={24}
+                />
+              </div>
+              <button
+                type="submit"
+                className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold text-lg transition-colors shadow-md"
+              >
+                Search
+              </button>
+            </form>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {/* Feature 1 */}
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Search className="w-8 h-8 text-blue-600" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                Quick Search
+              </h3>
+              <p className="text-gray-600">
+                Find repositories instantly by entering a GitHub username.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="text-center">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FaGithub className="w-8 h-8 text-purple-600" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                Browse Projects
+              </h3>
+              <p className="text-gray-600">
+                Explore repositories and discover innovative projects.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Star className="w-8 h-8 text-green-600" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                Stay Updated
+              </h3>
+              <p className="text-gray-600">
+                Keep track of the latest updates and contributions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }
