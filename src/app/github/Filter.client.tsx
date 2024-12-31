@@ -8,6 +8,7 @@ type Repo = {
   description: string;
   language: string;
   html_url: string;
+  updated_at?: string; // Assuming updated_at is a string, you can adjust this as needed
 };
 
 type FilterProps = {

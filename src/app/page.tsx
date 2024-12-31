@@ -1,7 +1,7 @@
 "use client";
 
 import { Search, Star } from "lucide-react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaGithub } from "react-icons/fa";
 import { useRouter } from "next/navigation";
@@ -10,10 +10,17 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const router = useRouter();
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    router.push(`/github?username=${username}`);
-  };
+  // Optimize handleSearch by using useCallback for performance
+  const handleSearch = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      const trimmedUsername = username.trim();
+      if (trimmedUsername) {
+        router.push(`/github?username=${trimmedUsername}`);
+      }
+    },
+    [username, router]
+  );
 
   return (
     <main className="min-h-screen bg-slate-50">
@@ -66,12 +73,17 @@ export default function Home() {
             </div>
             <button
               type="submit"
-              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 
-                       text-white rounded-xl font-medium text-lg shadow-lg
-                       transition-all duration-300 hover:shadow-teal-500/25
-                       hover:from-teal-400 hover:to-cyan-400 focus:ring-2 
-                       focus:ring-teal-500/50 focus:ring-offset-2 
-                       focus:ring-offset-transparent"
+              disabled={!username.trim()}
+              className={`w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 
+              text-white rounded-xl font-medium text-lg shadow-lg
+              transition-all duration-300 focus:ring-2 
+              focus:ring-teal-500/50 focus:ring-offset-2 
+              focus:ring-offset-transparent 
+              ${
+                !username.trim()
+                  ? "cursor-not-allowed opacity-50"
+                  : "hover:shadow-teal-500/25 hover:from-teal-400 hover:to-cyan-400"
+              }`}
             >
               Search
             </button>
